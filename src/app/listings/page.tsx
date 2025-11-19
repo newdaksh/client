@@ -21,7 +21,9 @@ interface Listing {
     };
 }
 
-export default function ListingsPage() {
+import { Suspense } from 'react';
+
+function ListingsContent() {
     const searchParams = useSearchParams();
     const [listings, setListings] = useState<Listing[]>([]);
     const [loading, setLoading] = useState(true);
@@ -151,5 +153,13 @@ export default function ListingsPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function ListingsPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+            <ListingsContent />
+        </Suspense>
     );
 }
